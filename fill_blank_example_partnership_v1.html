@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ja" data-template="fill-blank-v1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f3ef">
+  <meta name="color-scheme" content="light dark">
+  <title>パートナーシップ構築宣言｜穴埋め学習</title>
+  <style>
+    /* Fill-in-the-Blank Fixed Template v1
+       このCSSは教材ごとに変更しない。 */
+    :root {
+      --page-bg: #f4f3ef;
+      --card-bg: #fffefa;
+      --text: #20272b;
+      --muted: #667178;
+      --line: #d7dcd9;
+      --accent: #315d66;
+      --blank-bg: #dfe5e3;
+      --blank-border: #aebbb8;
+      --answer-bg: #d8ecec;
+      --focus: #b66a00;
+      --shadow: 0 12px 34px rgba(28, 45, 48, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page-bg: #161b1d;
+        --card-bg: #202729;
+        --text: #f0f4f3;
+        --muted: #b5c0be;
+        --line: #3e4948;
+        --accent: #9bcbd0;
+        --blank-bg: #3a4645;
+        --blank-border: #687674;
+        --answer-bg: #29494c;
+        --focus: #ffc35c;
+        --shadow: none;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 0;
+      background: var(--page-bg);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      min-width: 0;
+      min-height: 100vh;
+      margin: 0;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        max(14px, env(safe-area-inset-right))
+        max(34px, env(safe-area-inset-bottom))
+        max(14px, env(safe-area-inset-left));
+      overflow-wrap: anywhere;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic",
+        "YuGothic", "Noto Sans JP", "Segoe UI", sans-serif;
+      font-size: clamp(17px, 2.45vw, 20px);
+      line-height: 1.88;
+    }
+
+    .page {
+      width: min(100%, 880px);
+      margin: 0 auto;
+    }
+
+    .page-header,
+    .study-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .page-header {
+      margin-bottom: 16px;
+      padding: clamp(22px, 4.5vw, 38px);
+    }
+
+    .page-title {
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+    }
+
+    .page-description {
+      margin: 0.8rem 0 0;
+      color: var(--muted);
+      font-size: 0.91em;
+      line-height: 1.7;
+    }
+
+    .study-card {
+      padding: clamp(22px, 4.5vw, 40px);
+    }
+
+    .study-section + .study-section {
+      margin-top: 2rem;
+      padding-top: 1.55rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      margin: 0 0 0.75rem;
+      color: var(--accent);
+      font-size: 1.18rem;
+      line-height: 1.45;
+    }
+
+    p {
+      margin: 0.85rem 0;
+    }
+
+    ul,
+    ol {
+      margin: 0.85rem 0;
+      padding-left: 1.4em;
+    }
+
+    li + li {
+      margin-top: 1.05rem;
+    }
+
+    strong {
+      color: var(--accent);
+    }
+
+    /*
+      display:none は使わず、操作可能な状態のまま視覚的に隠す。
+      label をタップすると iPad Safari でも標準機能で切り替わる。
+    */
+    .answer-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /*
+      答えは最初から配置し、文字色を背景色と同じにして隠す。
+      checked 前後で寸法・余白・フォントは一切変えない。
+    */
+    .blank {
+      display: inline-block;
+      min-height: 1.72em;
+      margin: 0 0.08em;
+      padding: 0.015em 0.38em;
+      vertical-align: -0.12em;
+      white-space: nowrap;
+      border: 1px solid var(--blank-border);
+      border-radius: 0.38em;
+      background-color: var(--blank-bg);
+      color: var(--blank-bg);
+      -webkit-text-fill-color: var(--blank-bg);
+      font-weight: 700;
+      line-height: 1.55;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-user-select: none;
+      user-select: none;
+      transition: color 120ms ease, -webkit-text-fill-color 120ms ease, background-color 120ms ease;
+    }
+
+    .answer-toggle:checked + .blank {
+      background-color: var(--answer-bg);
+      color: var(--text);
+      -webkit-text-fill-color: var(--text);
+    }
+
+    .answer-toggle:focus-visible + .blank {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .blank:active {
+      filter: brightness(0.97);
+    }
+
+    .page-footer {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 0.76em;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        line-height: 1.82;
+      }
+
+      .page-header,
+      .study-card {
+        border-radius: 14px;
+      }
+
+      .blank {
+        padding-inline: 0.32em;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blank {
+        transition: none;
+      }
+    }
+
+    @media print {
+      :root {
+        --card-bg: #ffffff;
+        --text: #000000;
+        --muted: #444444;
+        --line: #aaaaaa;
+        --accent: #000000;
+      }
+
+      body {
+        padding: 0;
+        background: #ffffff;
+        color: #000000;
+      }
+
+      .page-header,
+      .study-card {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .blank,
+      .answer-toggle:checked + .blank {
+        background-color: transparent;
+        color: #000000;
+        -webkit-text-fill-color: #000000;
+      }
+
+      .page-footer {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <h1 class="page-title">パートナーシップ構築宣言｜穴埋め学習</h1>
+      <p class="page-description">灰色の空欄をタップすると答えが表示されます。もう一度タップすると隠れます。答えの表示・非表示で文章の配置は変わりません。</p>
+    </header>
+
+    <!-- DATA AREA START: 教材ごとに、このプレースホルダーだけを置換する -->
+    <article class="study-card">
+      <section class="study-section" aria-labelledby="section-01">
+        <h2 class="section-title" id="section-01">1．概要</h2>
+        <p>
+          「<input class="answer-toggle" type="checkbox" id="answer-001"><label class="blank" for="answer-001">パートナーシップ構築宣言</label>」は、
+          <input class="answer-toggle" type="checkbox" id="answer-002"><label class="blank" for="answer-002">サプライチェーン全体</label>の
+          <input class="answer-toggle" type="checkbox" id="answer-003"><label class="blank" for="answer-003">共存共栄</label>と
+          <input class="answer-toggle" type="checkbox" id="answer-004"><label class="blank" for="answer-004">取引の適正化</label>を目指し、
+          <input class="answer-toggle" type="checkbox" id="answer-005"><label class="blank" for="answer-005">企業の代表者名</label>で公式に表明する取組です。
+          主に<input class="answer-toggle" type="checkbox" id="answer-006"><label class="blank" for="answer-006">中小企業庁</label>や
+          <input class="answer-toggle" type="checkbox" id="answer-007"><label class="blank" for="answer-007">経済産業省</label>などが推進しています。
+        </p>
+        <p>
+          具体的には、以下の<input class="answer-toggle" type="checkbox" id="answer-008"><label class="blank" for="answer-008">2本柱</label>を中心に宣言します。
+        </p>
+      </section>
+
+      <section class="study-section" aria-labelledby="section-02">
+        <h2 class="section-title" id="section-02">2．宣言の2本柱</h2>
+        <ul>
+          <li>
+            <strong>サプライチェーン全体の共存共栄</strong><br>
+            <input class="answer-toggle" type="checkbox" id="answer-009"><label class="blank" for="answer-009">直接の取引先</label>だけでなく、
+            <input class="answer-toggle" type="checkbox" id="answer-010"><label class="blank" for="answer-010">その先の取引先</label>や
+            <input class="answer-toggle" type="checkbox" id="answer-011"><label class="blank" for="answer-011">連携事業者</label>との共存共栄を図り、
+            <input class="answer-toggle" type="checkbox" id="answer-012"><label class="blank" for="answer-012">オープンイノベーション</label>などの新たな連携を推進します。
+          </li>
+          <li>
+            <strong>「振興基準」の遵守（取引適正化）</strong><br>
+            「<input class="answer-toggle" type="checkbox" id="answer-013"><label class="blank" for="answer-013">振興基準</label>」を守り、
+            <input class="answer-toggle" type="checkbox" id="answer-014"><label class="blank" for="answer-014">下請法</label>をはじめとする
+            <input class="answer-toggle" type="checkbox" id="answer-015"><label class="blank" for="answer-015">望ましい取引慣行</label>を遵守します。
+          </li>
+        </ul>
+      </section>
+
+      <section class="study-section" aria-labelledby="section-03">
+        <h2 class="section-title" id="section-03">3．価格転嫁と支払条件</h2>
+        <p>
+          特に、<input class="answer-toggle" type="checkbox" id="answer-016"><label class="blank" for="answer-016">労務費</label>や
+          <input class="answer-toggle" type="checkbox" id="answer-017"><label class="blank" for="answer-017">原材料費</label>、
+          <input class="answer-toggle" type="checkbox" id="answer-018"><label class="blank" for="answer-018">エネルギーコスト</label>等の上昇分を適切に
+          <input class="answer-toggle" type="checkbox" id="answer-019"><label class="blank" for="answer-019">価格転嫁</label>できるよう、
+          <input class="answer-toggle" type="checkbox" id="answer-020"><label class="blank" for="answer-020">協議に応じる</label>ことを約束します。
+        </p>
+        <p>
+          また、<input class="answer-toggle" type="checkbox" id="answer-021"><label class="blank" for="answer-021">手形支払サイトの短縮</label>や
+          <input class="answer-toggle" type="checkbox" id="answer-022"><label class="blank" for="answer-022">減額要求の禁止</label>などを盛り込みます。
+        </p>
+      </section>
+
+      <section class="study-section" aria-labelledby="section-04">
+        <h2 class="section-title" id="section-04">4．主なメリットと意義</h2>
+        <p>
+          宣言を行うことで、企業の<input class="answer-toggle" type="checkbox" id="answer-023"><label class="blank" for="answer-023">CSR（社会的責任）</label>の姿勢を内外に示せるほか、
+          国の特定の補助金（<input class="answer-toggle" type="checkbox" id="answer-024"><label class="blank" for="answer-024">ものづくり補助金</label>など）において
+          <input class="answer-toggle" type="checkbox" id="answer-025"><label class="blank" for="answer-025">加点措置</label>を受けられるインセンティブがあります。
+        </p>
+        <p>
+          <input class="answer-toggle" type="checkbox" id="answer-026"><label class="blank" for="answer-026">発注側</label>と
+          <input class="answer-toggle" type="checkbox" id="answer-027"><label class="blank" for="answer-027">受注側</label>の
+          <input class="answer-toggle" type="checkbox" id="answer-028"><label class="blank" for="answer-028">パートナーシップ</label>を強化し、
+          <input class="answer-toggle" type="checkbox" id="answer-029"><label class="blank" for="answer-029">持続可能な成長</label>と
+          <input class="answer-toggle" type="checkbox" id="answer-030"><label class="blank" for="answer-030">賃上げ・付加価値向上</label>を図るための
+          <input class="answer-toggle" type="checkbox" id="answer-031"><label class="blank" for="answer-031">重要な枠組み</label>です。
+        </p>
+      </section>
+    </article>
+    <!-- DATA AREA END -->
+
+    <footer class="page-footer">Fill-in-the-Blank Template v1</footer>
+  </main>
+</body>
+</html>
